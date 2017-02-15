@@ -1,0 +1,24 @@
+<%= will_paginate @feedbacks %>
+<div class="table-responsive" data-pattern="">
+  <table class="table table-bordered table-striped">
+    <tr>
+      <th>Review</th>
+      <th>user</th>
+      <th>Rating</th>
+    </tr>
+    
+    <% @feedbacks.each do |feedback| %>
+    <tr>
+      <td><%= feedback.review.humanize %></td>
+      <td><%= feedback.user.name %></td>
+      <td><%= select_tag :rating , options_for_select([1,2,3,4,5], feedback.rating), class: 'form-control feedback-rating-dropdown' %></td>
+      <% end %>
+    </tr>
+  </table>
+</div>
+<%= will_paginate @feedbacks %>
+<div>
+  <%= link_to '<button type="button", class="btn btn-primary">Add Review</button>'.html_safe, new_artist_feedback_path(@artist), class: "btn btn-link" %>
+  <%= link_to '<button type="button", class="btn btn-primary">back</button>'.html_safe, artists_path, class: "btn btn-link" %>
+</div>
+

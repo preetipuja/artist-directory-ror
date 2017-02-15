@@ -1,0 +1,18 @@
+<h1>Categories Details</h1>
+<p>
+  <strong>Category Name:</strong>
+  <%= @category.name.humanize %>
+</p>
+
+<strong>Artist Name:</strong>
+<table>
+  <% @artists.each do |artist| %>
+  <tr>
+    <td><%= artist.name.humanize %></td>
+  </tr>
+  <% end %>
+</table>
+<br>
+<%= link_to '<button type="button", class="btn btn-primary">Edit</button>'.html_safe, edit_category_path(@category) %> 
+<%= link_to '<button type="button", class="btn btn-primary">Back</button>'.html_safe, categories_path %>
+

@@ -1,0 +1,24 @@
+<% provide(:title, 'All users') %>
+<h1>All users</h1>
+<table class="table table-striped" >
+  <tr>
+	  <th>User &nbsp;</th> 
+    <th>Delete</th>
+  </tr>
+  <% @users.each do |user| %>
+  <tr>
+    <td><%= link_to user.name.humanize, user_path(user) %></td>
+    <td><%= link_to  'Delete', user_path(user),
+		        method: :delete,
+		        data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+  </tr>
+  
+</table>
+<%= link_to '<button type="button", class="btn btn-primary">Add user</button>'.html_safe, new_user_path %>
+
+
+
+
+ 
+

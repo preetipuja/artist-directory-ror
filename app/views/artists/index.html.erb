@@ -1,0 +1,43 @@
+<h1>Listing Artists</h1>
+<%= will_paginate @artists %>
+<%= form_tag artists_path, :controller => 'artists', :action => 'index', :method => 'get', :id => "category_select" do %>
+<%= select_tag :category_id, options_from_collection_for_select(Category.all, :id, :name), :include_blank => 'All Categories' %>
+<%= submit_tag "submit", class: "form_submit" %>
+<% end %>
+
+<table class="table table-striped">
+  <tr>
+	  <th>Name  &nbsp;&nbsp;</th>
+    <th>Category</th>
+    <th>Average Rating</th>
+    <th>Works</th>
+    <th>Reviews</th>
+    <% if current_user.admin? %>
+	  <th></th>
+	  <th></th>
+    <% end %>
+	</tr>
+  
+  <% @artists.each do |artist| %>
+  <tr>
+	  <td><%= link_to artist.name.humanize , artist_path(artist) %> &nbsp;</td>
+    <td><%= artist.category.name %></td>
+    <td> <%= select_tag  :avg_rating,  options_for_select([1,2,3,4,5]), data: { current_rating: artist.avg_rating.to_f }, class: 'feedback-avg-rating-dropdown'  %></td>
+    <td> <%= link_to 'View Work', artist_performances_path(artist) %> &nbsp;</td>
+    <td> <%= link_to 'View Reviews', artist_feedbacks_path(artist) %> &nbsp;</td>
+    <% if current_user.admin? %>
+	  <td><%= link_to 'Edit', edit_artist_path(artist)%> &nbsp; </td>
+	  <td><%= link_to  'Delete',artist_path(artist) ,
+		        method: :delete,
+		        data: { confirm: 'Are you sure?' } %> &nbsp;</td>
+    <% end %>
+    
+  </tr>
+  <% end %>
+</table>
+<% if current_user.admin? %>
+<%= link_to '<button type="button", class="btn btn-primary">Add Artist</button>'.html_safe, new_artist_path %>
+<% end %>
+<%= link_to '<button type="button", class="btn btn-primary">Back</button>'.html_safe, welcome_index_path %>
+
+<%= will_paginate @artists%>

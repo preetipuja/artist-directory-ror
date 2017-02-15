@@ -1,0 +1,26 @@
+<h1>Gallery Area</h1>
+<% if current_user.admin? %>
+<%= form_for Photo.new, url: artist_photos_path(@artist) , :html => { :multipart => true } do |f| %>
+<%= f.file_field :image, required: true %>
+<%= f.submit "Add image" %>
+<% end %>
+<% end %>
+
+<%= will_paginate @photos %>
+<ul   class="list-inline" style="list-style:none">
+  <% @photos.each do |photo| %>
+  <li>
+    <%= link_to image_tag(photo.image.url(:thumb)), photo.image.url, class: "fancybox-thumb", rel: "fancybox-thumb" %>
+    <% if current_user.admin? %>
+    <%= link_to "Delete", artist_photo_path(@artist, photo), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" } %>
+    <% end %>
+  </li>
+  <% end %>
+</ul>
+
+<%= will_paginate @photos %>
+
+<div>
+  <%= link_to '<button type="button", class="btn btn-primary">back</button>'.html_safe, artist_path(@artist)%>
+</div>
+

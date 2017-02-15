@@ -1,0 +1,31 @@
+<h1>Listing categories</h1>
+<%= will_paginate @category%>
+<table class="table table-striped" >
+  <tr>
+	  <th>Category name &nbsp;</th> 
+    <% if current_user.admin? %>
+	  <th></th>
+	  <th></th>
+	  <% end %>  
+  </tr>
+  
+  <% @category.each do |category| %>
+  <tr>
+	  <td><%= link_to  category.name.humanize, category_path(category) %> &nbsp;</td>
+    <% if current_user.admin? %>
+	  <td><%= link_to  '<button type="button">Edit</button>'.html_safe, edit_category_path(category) %> &nbsp;</td>
+	  <td><%= link_to  '<button type="button">Delete</button>'.html_safe, category_path(category),
+		        method: :delete,
+		        data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+<%= will_paginate @category%>
+<div>
+  <% if current_user.admin? %>
+  <%= link_to '<button type="button", class="btn btn-primary">Add Category</button>'.html_safe, new_category_path %>
+  <% end %>
+  <%= link_to '<button type="button", class="btn btn-primary">Back</button>'.html_safe, welcome_index_path %>
+</div>
+

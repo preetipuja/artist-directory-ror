@@ -1,0 +1,25 @@
+<h1>Performance Area</h1>
+<% if current_user.admin? %>
+<%= form_for Performance.new, url: artist_performances_path(@artist) do |f| %>
+<%= f.text_field :media_url, required: true %>
+<%= f.submit "Add Performance", :class=> "btn btn-primary" %>
+<% end %>
+<% end %>
+<%= will_paginate @performances %>
+<ul style="list-style:none" class="list-inline">
+  <% @performances.each do |performance| %>
+  <li>
+    <%= link_to image_tag("https://img.youtube.com/vi/#{get_youtube_id(performance.media_url)}/default.jpg"), "http://www.youtube.com/embed/#{get_youtube_id(performance.media_url)}", class: "fancybox-media" %> </br>
+    <% if current_user.admin? %>
+    <%= link_to "Delete", artist_performance_path(@artist, performance),
+		    method: :delete,
+		    data: { confirm: 'Are you sure?' } %> 
+    <% end %>
+  </li>
+  <% end %>
+</ul>
+
+<%= will_paginate  @performances %>
+<div>
+  <%= link_to '<button type="button", class="btn btn-primary">Back</button>'.html_safe, artists_path %>
+</div>

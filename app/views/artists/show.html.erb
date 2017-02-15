@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="center" style="font-size:18px">
+    <h1 style="text-align:center">Artist Profile</h1>
+    <p>
+      <strong>Name:</strong>
+      <%= @artist.name.humanize %>
+    </p>
+    <p>
+      <strong>Email:</strong>
+      <%= @artist.email %>
+    </p>
+    <p>
+      <strong>Location:</strong>
+  <%= @artist.location.humanize %>
+    </p>
+    <p>
+      <strong>Year of Birth:</strong>
+      <%= @artist.year_of_birth %>
+    </p>
+    <p>
+      <strong>Category:</strong>
+      <%= @artist.category.name %>
+    </p>
+    <div>
+      <%= link_to 'Gallery  ', artist_photos_path(@artist) %>|
+      <%= link_to 'Reviews  ', artist_feedbacks_path(@artist) %>|
+      <%= link_to 'View Performance', artist_performances_path(@artist) %>
+    </div>
+</br>
+<div>
+  <% if current_user.admin? %>
+  <%= link_to '<button type="button", class="btn btn-primary"> Edit Artist</button>'.html_safe, edit_artist_path(@artist) %> 
+  <% end %>
+  <%= link_to '<button type="button", class="btn btn-primary">Back</button>'.html_safe, artists_path %>
+</div>
+  </div>
+</div>
